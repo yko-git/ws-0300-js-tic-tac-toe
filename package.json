@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/version-1/js-tic-tac-toe#readme",
   "devDependencies": {
-    "sass": "^1.57.1"
+    "sass": "^1.72.0"
+  },
+  "dependencies": {
+    "destyle.css": "^4.0.1"
   }
 }
