@@ -17,10 +17,39 @@
         <header>
           <h1>TIC TAC TOE</h1>
         </header>
-        <ul class="items">
-          <li>○</li>
-          <li>×</li>
-        </ul>
+        <div class="items">
+          <div class="items-item is-active">○</div>
+          <div class="items-item">×</div>
+        </div>
+        <div class="l-board">
+          <table class="table js-table">
+            <tbody>
+              <tr class="row">
+                <td class="cell js-cell"></td>
+                <td class="cell js-cell"></td>
+                <td class="cell js-cell"></td>
+              </tr>
+              <tr class="row">
+                <td class="cell js-cell"></td>
+                <td class="cell js-cell"></td>
+                <td class="cell js-cell"></td>
+              </tr>
+              <tr class="row">
+                <td class="cell js-cell"></td>
+                <td class="cell js-cell"></td>
+                <td class="cell js-cell"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="l-footer">
+          <div class="state">starting...</div>
+          <div>
+              <a class="btn btn-restart js-restart">RESTART</a>
+            </div>
+          </div>
+        </div>
       </main>
     </div>
     <script type="text/javascript" src="js/function.js"></script>
