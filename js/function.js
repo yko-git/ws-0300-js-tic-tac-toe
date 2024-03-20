@@ -1,18 +1,22 @@
 const itemsItem = document.querySelectorAll(".items-item");
 const jsCell = document.querySelectorAll(".js-cell");
+const jsReset = document.querySelector(".btn-restart");
 
 itemsItem.forEach((target) => {
-  for (let i = 0; i < jsCell.length; i++) {
-    jsCell[i].addEventListener("click", () => {
+  jsCell.forEach((cellTarget) => {
+    // if (cellTarget.children.length === 0) {
+    //   console.log(cellTarget);
+    // }
+    cellTarget.addEventListener("click", () => {
       target.classList.toggle("is-active");
 
       if (target.classList.contains("is-active")) {
-        jsCell[i].innerHTML = target.innerHTML;
+        cellTarget.innerHTML = target.dataset.set;
       }
     });
-  }
+  });
 });
 
-// jsCell.addEventListener("click", () => {
-//   console.log("click");
-// });
+jsReset.addEventListener("click", () => {
+  location.reload();
+});
