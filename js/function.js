@@ -8,10 +8,13 @@ for (let cell of jsCell) {
 
 function clickFunc() {
   this.style.pointerEvents = "none";
-
   for (let target of itemsItem) {
     if (target.classList.contains("is-active")) {
-      this.innerHTML = target.dataset.set;
+      this.innerHTML = target.innerHTML;
+      console.log(this.innerHTML);
+      //   if (this.dataset === 1) {
+      //     console.log(this.innerHTML);
+      //   }
     }
     target.classList.toggle("is-active");
   }
