@@ -2,18 +2,37 @@ const itemsItem = document.querySelectorAll(".items-item");
 const jsCell = document.querySelectorAll(".js-cell");
 const jsReset = document.querySelector(".btn-restart");
 
-itemsItem.forEach((target) => {
-  jsCell.forEach((cellTarget) => {
-    cellTarget.addEventListener("click", () => {
-      target.classList.toggle("is-active");
-      cellTarget.classList.add("set");
+for (let cell of jsCell) {
+  cell.addEventListener("click", clickFunc);
+}
 
-      if (target.classList.contains("is-active")) {
-        cellTarget.innerHTML = target.dataset.set;
-      }
-    });
-  });
-});
+function clickFunc() {
+  this.style.pointerEvents = "none";
+
+  for (let target of itemsItem) {
+    if (target.classList.contains("is-active")) {
+      this.innerHTML = target.dataset.set;
+    }
+    target.classList.toggle("is-active");
+  }
+}
+
+// function setClass() {
+//   this.classList.add("set");
+// }
+
+// itemsItem.forEach((target) => {
+//   jsCell.forEach((cellTarget) => {
+//     cellTarget.addEventListener("click", () => {
+//       target.classList.toggle("is-active");
+//       cellTarget.classList.add("set");
+
+//       if (target.classList.contains("is-active")) {
+//         cellTarget.innerHTML = target.dataset.set;
+//       }
+//     });
+//   });
+// });
 
 // resetボタン処理
 jsReset.addEventListener("click", () => {
