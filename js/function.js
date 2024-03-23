@@ -1,43 +1,59 @@
 const itemsItem = document.querySelectorAll(".items-item");
 const jsCell = document.querySelectorAll(".js-cell");
+const Board = document.querySelector(".l-board");
 const jsReset = document.querySelector(".btn-restart");
+const state = document.querySelector(".js-state");
+let clickCount = 0;
 
-for (let cell of jsCell) {
-  cell.addEventListener("click", clickFunc);
-}
+// セルをクリックするごとにitemsのactiveを切り替える
 
-function clickFunc() {
-  this.style.pointerEvents = "none";
-  for (let target of itemsItem) {
-    if (target.classList.contains("is-active")) {
-      this.innerHTML = target.innerHTML;
-      console.log(this.innerHTML);
-      //   if (this.dataset === 1) {
-      //     console.log(this.innerHTML);
-      //   }
+for (let i = 0; i < jsCell.length; i++) {
+  jsCell[i].addEventListener("click", (e) => {
+    if (jsCell[i].childNodes.length >= 1) {
+      return;
     }
-    target.classList.toggle("is-active");
-  }
+    addChild(jsCell[i]);
+    for (let item of itemsItem) {
+      addClass(item);
+    }
+
+    // console.log(jsCell[i].innerHTML);
+    if (
+      jsCell[0].innerHTML === "⚪︎" &&
+      jsCell[1].innerHTML === "⚪︎" &&
+      jsCell[2].innerHTML === "⚪︎"
+    ) {
+      state.innerHTML = "win!";
+      Board.classList.add("set");
+    } else if (
+      jsCell[0].innerHTML === "⚪︎" &&
+      jsCell[3].innerHTML === "⚪︎" &&
+      jsCell[6].innerHTML === "⚪︎"
+    ) {
+      state.innerHTML = "win!";
+      Board.classList.add("set");
+    }
+  });
 }
 
-// function setClass() {
-//   this.classList.add("set");
-// }
+const addClass = (classItem) => {
+  classItem.classList.toggle("is-active");
+};
 
-// itemsItem.forEach((target) => {
-//   jsCell.forEach((cellTarget) => {
-//     cellTarget.addEventListener("click", () => {
-//       target.classList.toggle("is-active");
-//       cellTarget.classList.add("set");
+// セルをクリックすると⚪︎とバツが交互に出力される
+const addChild = (targetChild) => {
+  clickCount++;
+  if (clickCount % 2 === 0) {
+    targetChild.innerHTML = "×";
+  } else {
+    targetChild.innerHTML = "⚪︎";
+  }
+};
 
-//       if (target.classList.contains("is-active")) {
-//         cellTarget.innerHTML = target.dataset.set;
-//       }
-//     });
-//   });
-// });
+// どちらかが揃ったら メッセージをwinに
+// 揃わずに全てのセルが埋まったら メッセージをdrawに
 
-// resetボタン処理
+//リセットボタンでリロード
 jsReset.addEventListener("click", () => {
   location.reload();
 });
