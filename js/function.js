@@ -31,13 +31,13 @@ for (let i = 0; i < jsCell.length; i++) {
         jsCell[win[j][1]].innerHTML === "⚪︎" &&
         jsCell[win[j][2]].innerHTML === "⚪︎"
       ) {
-        message();
+        message("⚪︎");
       } else if (
         jsCell[win[j][0]].innerHTML === "×" &&
         jsCell[win[j][1]].innerHTML === "×" &&
         jsCell[win[j][2]].innerHTML === "×"
       ) {
-        message();
+        message("×");
       }
     }
 
@@ -64,8 +64,8 @@ const addChild = (targetChild) => {
 };
 
 // どちらかが揃ったら メッセージをwinに
-const message = () => {
-  state.innerHTML = "win!";
+const message = (mark) => {
+  state.innerHTML = `${mark} win`;
   Board.classList.add("set");
 };
 
