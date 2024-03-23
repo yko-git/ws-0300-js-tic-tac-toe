@@ -27,11 +27,11 @@ for (let i = 0; i < jsCell.length; i++) {
 
     for (let j = 0; j < win.length; j++) {
       if (
-        jsCell[win[j][0]].innerHTML === "⚪︎" &&
-        jsCell[win[j][1]].innerHTML === "⚪︎" &&
-        jsCell[win[j][2]].innerHTML === "⚪︎"
+        jsCell[win[j][0]].innerHTML === "○" &&
+        jsCell[win[j][1]].innerHTML === "○" &&
+        jsCell[win[j][2]].innerHTML === "○"
       ) {
-        message("⚪︎");
+        message("○");
       } else if (
         jsCell[win[j][0]].innerHTML === "×" &&
         jsCell[win[j][1]].innerHTML === "×" &&
@@ -53,13 +53,13 @@ const addClass = (classItem) => {
   classItem.classList.toggle("is-active");
 };
 
-// セルをクリックすると⚪︎とバツが交互に出力される
+// セルをクリックすると○とバツが交互に出力される
 const addChild = (targetChild) => {
   clickCount++;
   if (clickCount % 2 === 0) {
     targetChild.innerHTML = "×";
   } else {
-    targetChild.innerHTML = "⚪︎";
+    targetChild.innerHTML = "○";
   }
 };
 
