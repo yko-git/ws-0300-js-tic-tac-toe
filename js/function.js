@@ -1,8 +1,8 @@
 const itemsItem = document.querySelectorAll(".items-item");
+const board = document.querySelector(".l-board");
 const jsCell = document.querySelectorAll(".js-cell");
-const Board = document.querySelector(".l-board");
-const jsReset = document.querySelector(".btn-restart");
 const state = document.querySelector(".js-state");
+const jsReset = document.querySelector(".btn-restart");
 const win = [
   [0, 1, 2],
   [3, 4, 5],
@@ -16,9 +16,9 @@ const win = [
 
 let clickCount = 0;
 
-for (let i = 0; i < jsCell.length; i++) {
-  jsCell[i].addEventListener("click", () => {
-    addChild(jsCell[i]);
+for (let cell of jsCell) {
+  cell.addEventListener("click", () => {
+    addChild(cell);
 
     addClass();
 
@@ -28,17 +28,17 @@ for (let i = 0; i < jsCell.length; i++) {
 
 // 判定
 const judge = () => {
-  for (let j = 0; j < win.length; j++) {
+  for (let i = 0; i < win.length; i++) {
     if (
-      jsCell[win[j][0]].innerHTML === "○" &&
-      jsCell[win[j][1]].innerHTML === "○" &&
-      jsCell[win[j][2]].innerHTML === "○"
+      jsCell[win[i][0]].innerHTML === "○" &&
+      jsCell[win[i][1]].innerHTML === "○" &&
+      jsCell[win[i][2]].innerHTML === "○"
     ) {
       return message("○");
     } else if (
-      jsCell[win[j][0]].innerHTML === "×" &&
-      jsCell[win[j][1]].innerHTML === "×" &&
-      jsCell[win[j][2]].innerHTML === "×"
+      jsCell[win[i][0]].innerHTML === "×" &&
+      jsCell[win[i][1]].innerHTML === "×" &&
+      jsCell[win[i][2]].innerHTML === "×"
     ) {
       return message("×");
     }
@@ -62,15 +62,17 @@ const addChild = (targetChild) => {
 
   if (clickCount % 2 === 0) {
     targetChild.innerHTML = "×";
+    targetChild.classList.add("set");
   } else {
     targetChild.innerHTML = "○";
+    targetChild.classList.add("set");
   }
 };
 
 // どちらかが揃ったら メッセージをwinに
 const message = (mark) => {
   state.innerHTML = `${mark} win`;
-  Board.classList.add("set");
+  board.classList.add("set");
 };
 
 //リセットボタンでリロード
