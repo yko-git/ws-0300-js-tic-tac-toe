@@ -16,29 +16,45 @@ const win = [
 
 let clickCount = 0;
 
-for (let cell of jsCell) {
+jsCell.forEach(function (cell) {
   cell.addEventListener("click", () => {
     addChild(cell);
 
-    addClass();
+    addClass(itemsItem);
 
-    judge();
+    judge(jsCell);
   });
-}
+});
 
 // 判定
-const judge = () => {
+const judge = (judgeCell) => {
+  // win.forEach((val) => {
+  //   if (
+  //     judgeCell[val[0]].innerHTML === "○" &&
+  //     judgeCell[val[1]].innerHTML === "○" &&
+  //     judgeCell[val[2]].innerHTML === "○"
+  //   ) {
+  //     return message("○");
+  //   } else if (
+  //     judgeCell[val[0]].innerHTML === "×" &&
+  //     judgeCell[val[1]].innerHTML === "×" &&
+  //     judgeCell[val[2]].innerHTML === "×"
+  //   ) {
+  //     return message("×");
+  //   }
+  // });
+
   for (let i = 0; i < win.length; i++) {
     if (
-      jsCell[win[i][0]].innerHTML === "○" &&
-      jsCell[win[i][1]].innerHTML === "○" &&
-      jsCell[win[i][2]].innerHTML === "○"
+      judgeCell[win[i][0]].innerHTML === "○" &&
+      judgeCell[win[i][1]].innerHTML === "○" &&
+      judgeCell[win[i][2]].innerHTML === "○"
     ) {
       return message("○");
     } else if (
-      jsCell[win[i][0]].innerHTML === "×" &&
-      jsCell[win[i][1]].innerHTML === "×" &&
-      jsCell[win[i][2]].innerHTML === "×"
+      judgeCell[win[i][0]].innerHTML === "×" &&
+      judgeCell[win[i][1]].innerHTML === "×" &&
+      judgeCell[win[i][2]].innerHTML === "×"
     ) {
       return message("×");
     }
@@ -50,8 +66,8 @@ const judge = () => {
 };
 
 // セルをクリックするごとにitemsのactiveを切り替える
-const addClass = () => {
-  for (let item of itemsItem) {
+const addClass = (items) => {
+  for (let item of items) {
     item.classList.toggle("is-active");
   }
 };
