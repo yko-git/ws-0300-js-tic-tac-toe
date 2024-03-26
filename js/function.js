@@ -14,8 +14,6 @@ const win = [
   [2, 4, 6],
 ];
 
-let clickCount = 0;
-
 jsCell.forEach(function (cell) {
   cell.addEventListener("click", () => {
     addChild(cell);
@@ -26,24 +24,35 @@ jsCell.forEach(function (cell) {
   });
 });
 
+// let clickCount = 0;
+
+const countFunc = (() => {
+  let count = 0;
+
+  return {
+    inner: () => {
+      return count++;
+    },
+  };
+})();
+
+// セルをクリックすると○とバツが交互に出力される
+const addChild = (targetChild) => {
+  countFunc.inner();
+  console.log(countFunc.inner());
+  // clickCount++;
+
+  if (countFunc.inner() % 2 === 0) {
+    targetChild.innerHTML = "×";
+    targetChild.classList.add("set");
+  } else {
+    targetChild.innerHTML = "○";
+    targetChild.classList.add("set");
+  }
+};
+
 // 判定
 const judge = (judgeCell) => {
-  // win.forEach((val) => {
-  //   if (
-  //     judgeCell[val[0]].innerHTML === "○" &&
-  //     judgeCell[val[1]].innerHTML === "○" &&
-  //     judgeCell[val[2]].innerHTML === "○"
-  //   ) {
-  //     return message("○");
-  //   } else if (
-  //     judgeCell[val[0]].innerHTML === "×" &&
-  //     judgeCell[val[1]].innerHTML === "×" &&
-  //     judgeCell[val[2]].innerHTML === "×"
-  //   ) {
-  //     return message("×");
-  //   }
-  // });
-
   for (let i = 0; i < win.length; i++) {
     if (
       judgeCell[win[i][0]].innerHTML === "○" &&
@@ -60,7 +69,7 @@ const judge = (judgeCell) => {
     }
   }
   // 揃わずに全てのセルが埋まったら メッセージをdrawに
-  if (clickCount === 9) {
+  if (countFunc.inner() === 9) {
     state.innerHTML = "draw";
   }
 };
@@ -69,19 +78,6 @@ const judge = (judgeCell) => {
 const addClass = (items) => {
   for (let item of items) {
     item.classList.toggle("is-active");
-  }
-};
-
-// セルをクリックすると○とバツが交互に出力される
-const addChild = (targetChild) => {
-  clickCount++;
-
-  if (clickCount % 2 === 0) {
-    targetChild.innerHTML = "×";
-    targetChild.classList.add("set");
-  } else {
-    targetChild.innerHTML = "○";
-    targetChild.classList.add("set");
   }
 };
 
