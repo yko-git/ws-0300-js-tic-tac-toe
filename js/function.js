@@ -39,7 +39,6 @@ const countFunc = (() => {
 // セルをクリックすると○とバツが交互に出力される
 const addChild = (targetChild) => {
   countFunc.inner();
-  console.log(countFunc.inner());
   // clickCount++;
 
   if (countFunc.inner() % 2 === 0) {
