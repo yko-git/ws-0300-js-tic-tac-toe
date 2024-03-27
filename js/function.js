@@ -14,58 +14,70 @@ const win = [
   [2, 4, 6],
 ];
 
-let clickCount = 0;
-
-for (let cell of jsCell) {
+jsCell.forEach(function (cell) {
   cell.addEventListener("click", () => {
     addChild(cell);
 
-    addClass();
+    addClass(itemsItem);
 
-    judge();
+    judge(jsCell);
   });
-}
+});
 
-// 判定
-const judge = () => {
-  for (let i = 0; i < win.length; i++) {
-    if (
-      jsCell[win[i][0]].innerHTML === "○" &&
-      jsCell[win[i][1]].innerHTML === "○" &&
-      jsCell[win[i][2]].innerHTML === "○"
-    ) {
-      return message("○");
-    } else if (
-      jsCell[win[i][0]].innerHTML === "×" &&
-      jsCell[win[i][1]].innerHTML === "×" &&
-      jsCell[win[i][2]].innerHTML === "×"
-    ) {
-      return message("×");
-    }
-  }
-  // 揃わずに全てのセルが埋まったら メッセージをdrawに
-  if (clickCount === 9) {
-    state.innerHTML = "draw";
-  }
-};
+// let clickCount = 0;
 
-// セルをクリックするごとにitemsのactiveを切り替える
-const addClass = () => {
-  for (let item of itemsItem) {
-    item.classList.toggle("is-active");
-  }
-};
+const countFunc = (() => {
+  let count = 0;
+
+  return {
+    inner: () => {
+      return count++;
+    },
+  };
+})();
 
 // セルをクリックすると○とバツが交互に出力される
 const addChild = (targetChild) => {
-  clickCount++;
+  countFunc.inner();
+  console.log(countFunc.inner());
+  // clickCount++;
 
-  if (clickCount % 2 === 0) {
+  if (countFunc.inner() % 2 === 0) {
     targetChild.innerHTML = "×";
     targetChild.classList.add("set");
   } else {
     targetChild.innerHTML = "○";
     targetChild.classList.add("set");
+  }
+};
+
+// 判定
+const judge = (judgeCell) => {
+  for (let i = 0; i < win.length; i++) {
+    if (
+      judgeCell[win[i][0]].innerHTML === "○" &&
+      judgeCell[win[i][1]].innerHTML === "○" &&
+      judgeCell[win[i][2]].innerHTML === "○"
+    ) {
+      return message("○");
+    } else if (
+      judgeCell[win[i][0]].innerHTML === "×" &&
+      judgeCell[win[i][1]].innerHTML === "×" &&
+      judgeCell[win[i][2]].innerHTML === "×"
+    ) {
+      return message("×");
+    }
+  }
+  // 揃わずに全てのセルが埋まったら メッセージをdrawに
+  if (countFunc.inner() === 9) {
+    state.innerHTML = "draw";
+  }
+};
+
+// セルをクリックするごとにitemsのactiveを切り替える
+const addClass = (items) => {
+  for (let item of items) {
+    item.classList.toggle("is-active");
   }
 };
 
