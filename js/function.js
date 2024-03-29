@@ -29,6 +29,7 @@ const countFunc = (() => {
 // イベントの登録
 jsCell.forEach(function (cell, index) {
   cell.addEventListener("click", (e) => {
+    // debugger;
     // セルの中身があったらそのまま
     if (cells[index]) {
       return;
@@ -56,12 +57,11 @@ jsCell.forEach(function (cell, index) {
     if (judged) {
       message(inputValue);
       doneFunc(board);
+    } else if (count === 8) {
+      state.innerHTML = "draw";
     }
 
     // 揃わずに全てのセルが埋まったら メッセージをdrawに
-    if (count === 8) {
-      state.innerHTML = "draw";
-    }
   });
 });
 
