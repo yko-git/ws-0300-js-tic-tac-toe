@@ -3,7 +3,7 @@ const board = document.querySelector(".l-board");
 const jsCell = document.querySelectorAll(".js-cell");
 const state = document.querySelector(".js-state");
 const jsReset = document.querySelector(".btn-restart");
-const win = [
+const winPatterns = [
   [0, 1, 2],
   [3, 4, 5],
   [6, 7, 8],
@@ -14,17 +14,7 @@ const win = [
   [2, 4, 6],
 ];
 
-jsCell.forEach(function (cell) {
-  cell.addEventListener("click", () => {
-    addChild(cell);
-
-    addClass(itemsItem);
-
-    judge(jsCell);
-  });
-});
-
-// let clickCount = 0;
+const cells = ["", "", "", "", "", "", "", "", ""];
 
 const countFunc = (() => {
   let count = 0;
@@ -36,54 +26,82 @@ const countFunc = (() => {
   };
 })();
 
-// セルをクリックすると○とバツが交互に出力される
-const addChild = (targetChild) => {
-  countFunc.inner();
-  // clickCount++;
+// イベントの登録
+jsCell.forEach(function (cell, index) {
+  cell.addEventListener("click", (e) => {
+    // セルの中身があったらそのまま
+    if (cells[index]) {
+      return;
+    }
+    // countFunc関数をcountへ代入
+    const count = countFunc.inner();
 
-  if (countFunc.inner() % 2 === 0) {
-    targetChild.innerHTML = "×";
-    targetChild.classList.add("set");
-  } else {
-    targetChild.innerHTML = "○";
-    targetChild.classList.add("set");
-  }
-};
+    // countの値の奇数判定
+    const circleTurn = count % 2 === 0;
+    // 奇数だったら⚪︎そうでなければ×
+    const inputValue = circleTurn ? "○" : "×";
+
+    cell.innerHTML = inputValue;
+
+    // 判定結果をinnerHTMLで出力
+    cells[index] = inputValue;
+
+    // itemsItemにtoggleTurn関数を実行
+    toggleTurn(itemsItem);
+
+    // cellsを引数にしたjudgeをjudgedに代入
+    const judged = judge(cells);
+
+    // judgedの結果で判定
+    if (judged) {
+      message(inputValue);
+      doneFunc(board);
+    }
+
+    // 揃わずに全てのセルが埋まったら メッセージをdrawに
+    if (count === 8) {
+      state.innerHTML = "draw";
+    }
+  });
+});
 
 // 判定
 const judge = (judgeCell) => {
-  for (let i = 0; i < win.length; i++) {
+  for (let i = 0; i < winPatterns.length; i++) {
     if (
-      judgeCell[win[i][0]].innerHTML === "○" &&
-      judgeCell[win[i][1]].innerHTML === "○" &&
-      judgeCell[win[i][2]].innerHTML === "○"
+      judgeCell[winPatterns[i][0]] === "○" &&
+      judgeCell[winPatterns[i][1]] === "○" &&
+      judgeCell[winPatterns[i][2]] === "○"
     ) {
-      return message("○");
-    } else if (
-      judgeCell[win[i][0]].innerHTML === "×" &&
-      judgeCell[win[i][1]].innerHTML === "×" &&
-      judgeCell[win[i][2]].innerHTML === "×"
+      return true;
+    }
+
+    if (
+      judgeCell[winPatterns[i][0]] === "×" &&
+      judgeCell[winPatterns[i][1]] === "×" &&
+      judgeCell[winPatterns[i][2]] === "×"
     ) {
-      return message("×");
+      return true;
     }
   }
-  // 揃わずに全てのセルが埋まったら メッセージをdrawに
-  if (countFunc.inner() === 9) {
-    state.innerHTML = "draw";
-  }
+
+  return false;
 };
 
 // セルをクリックするごとにitemsのactiveを切り替える
-const addClass = (items) => {
+const toggleTurn = (items) => {
   for (let item of items) {
     item.classList.toggle("is-active");
   }
 };
 
+const doneFunc = (target) => {
+  target.classList.toggle("set");
+};
+
 // どちらかが揃ったら メッセージをwinに
 const message = (mark) => {
   state.innerHTML = `${mark} win`;
-  board.classList.add("set");
 };
 
 //リセットボタンでリロード
