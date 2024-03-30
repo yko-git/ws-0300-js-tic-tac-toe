@@ -66,25 +66,23 @@ jsCell.forEach(function (cell, index) {
 
 // 判定
 const judge = (judgeCell) => {
-  for (let i = 0; i < winPatterns.length; i++) {
+  const judgeInner = winPatterns.some((line) => {
     if (
-      judgeCell[winPatterns[i][0]] === "○" &&
-      judgeCell[winPatterns[i][1]] === "○" &&
-      judgeCell[winPatterns[i][2]] === "○"
+      judgeCell[line[0]] === "○" &&
+      judgeCell[line[1]] === "○" &&
+      judgeCell[line[2]] === "○"
     ) {
       return true;
     }
-
     if (
-      judgeCell[winPatterns[i][0]] === "×" &&
-      judgeCell[winPatterns[i][1]] === "×" &&
-      judgeCell[winPatterns[i][2]] === "×"
+      judgeCell[line[0]] === "×" &&
+      judgeCell[line[1]] === "×" &&
+      judgeCell[line[2]] === "×"
     ) {
       return true;
     }
-  }
-
-  return false;
+  });
+  return judgeInner;
 };
 
 // セルをクリックするごとにitemsのactiveを切り替える
