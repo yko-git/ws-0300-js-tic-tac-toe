@@ -3,6 +3,7 @@ const board = document.querySelector(".l-board");
 const jsCell = document.querySelectorAll(".js-cell");
 const state = document.querySelector(".js-state");
 const jsReset = document.querySelector(".btn-restart");
+let done = false;
 const winPatterns = [
   [0, 1, 2],
   [3, 4, 5],
@@ -28,10 +29,9 @@ const countFunc = (() => {
 
 // イベントの登録
 jsCell.forEach(function (cell, index) {
-  cell.addEventListener("click", (e) => {
-    // debugger;
-    // セルの中身があったらそのまま
-    if (cells[index]) {
+  cell.addEventListener("click", () => {
+    // セルの中身がある、もしくはdoneがtrueだったら処理せずそのまま
+    if (cells[index] || done) {
       return;
     }
     // countFunc関数をcountへ代入
@@ -56,12 +56,11 @@ jsCell.forEach(function (cell, index) {
     // judgedの結果で判定
     if (judged) {
       message(inputValue);
-      doneFunc(board);
+      done = true;
     } else if (count === 8) {
+      // 揃わずに全てのセルが埋まったら メッセージをdrawに
       state.innerHTML = "draw";
     }
-
-    // 揃わずに全てのセルが埋まったら メッセージをdrawに
   });
 });
 
@@ -95,9 +94,10 @@ const toggleTurn = (items) => {
   }
 };
 
-const doneFunc = (target) => {
-  target.classList.toggle("set");
-};
+// const doneFunc = (target) => {
+//   debugger;
+//   target.classList.add("set");
+// };
 
 // どちらかが揃ったら メッセージをwinに
 const message = (mark) => {
