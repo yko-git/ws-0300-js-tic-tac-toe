@@ -67,17 +67,12 @@ jsCell.forEach(function (cell, index) {
 // 判定
 const judge = (judgeCell) => {
   const judgeInner = winPatterns.some((line) => {
+    console.log(line);
+    const [first, second, third] = line;
     if (
-      judgeCell[line[0]] === "○" &&
-      judgeCell[line[1]] === "○" &&
-      judgeCell[line[2]] === "○"
-    ) {
-      return true;
-    }
-    if (
-      judgeCell[line[0]] === "×" &&
-      judgeCell[line[1]] === "×" &&
-      judgeCell[line[2]] === "×"
+      judgeCell[first] &&
+      judgeCell[first] === judgeCell[second] &&
+      judgeCell[second] === judgeCell[third]
     ) {
       return true;
     }
@@ -91,11 +86,6 @@ const toggleTurn = (items) => {
     item.classList.toggle("is-active");
   }
 };
-
-// const doneFunc = (target) => {
-//   debugger;
-//   target.classList.add("set");
-// };
 
 // どちらかが揃ったら メッセージをwinに
 const message = (mark) => {
